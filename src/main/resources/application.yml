@@ -1,0 +1,12 @@
+server:
+  port: 8091
+  tomcat:
+    accesslog:
+      enabled: true
+      directory: /dev
+      prefix: stdout
+      buffered: false
+      suffix: ""
+      file-date-format: ""
+    threads:
+      max: 412
