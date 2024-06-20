@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController
 class ApiController {
 
     // Simulates a Wordpress mail endpoint
-
     @GetMapping("/wp-json/email/v1/get")
     fun get(): ApiResponse {
         logger.info("Got a GET request")
