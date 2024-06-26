@@ -63,10 +63,15 @@ class ApiController {
 
     @GetMapping("/slow-response")
     fun slowResponse(response: HttpServletResponse): StreamingResponseBody {
+        response.contentType = "application/json"
         return StreamingResponseBody { outputStream ->
             outputStream.bufferedWriter().use { writer ->
+                writer.write("[") // Start of JSON array
                 for (i in 1..60) {
-                    writer.write("Chunk $i of data\n")
+                    if (i > 1) {
+                        writer.write(",") // Add a comma for separation
+                    }
+                    writer.write("{\"chunk\": $i, \"message\": \"Chunk $i of data\"}")
                     writer.flush()
                     try {
                         Thread.sleep(1000) // sleep for 1 second
@@ -75,7 +80,7 @@ class ApiController {
                         throw IOException("Thread interrupted", e)
                     }
                 }
-                writer.write("Done\n")
+                writer.write("]") // End of JSON array
                 writer.flush()
             }
         }
